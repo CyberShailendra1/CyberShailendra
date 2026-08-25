@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CyberShailendra | Ethical Hacker & Cyber Security Researcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cyan: #00D4FF;
+    --green: #39FF14;
+    --navy: #0A0F1E;
+    --dark: #050810;
+    --card: #0D1526;
+    --border: rgba(0,212,255,0.18);
+    --white: #E8F4FF;
+    --muted: #7A8BA8;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 3px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    background: rgba(5,8,16,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .nav-logo span.cyber { color: var(--cyan); }
+  .nav-logo span.sha { color: var(--green); }
+  .nav-logo img { height: 85px; width: 85px; object-fit: contain; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
+    font-family: 'Share Tech Mono', monospace;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px;
+    background: var(--cyan); transform: scaleX(0); transition: transform 0.2s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta {
+    background: transparent; border: 1px solid var(--green);
+    color: var(--green); padding: 8px 20px; border-radius: 3px;
+    font-family: 'Orbitron', sans-serif; font-size: 0.72rem;
+    letter-spacing: 0.1em; cursor: pointer; text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    text-transform: uppercase;
+  }
+  .nav-cta:hover { background: var(--green); color: #000; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 100px 5% 60px;
+  }
+  canvas#matrix {
+    position: absolute; inset: 0; opacity: 0.13; pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .hero-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 1.2rem; max-width: 900px;
+  }
+  .hero-logo {
+    width: 160px; height: 160px; object-fit: contain;
+    filter: drop-shadow(0 0 28px rgba(0,212,255,0.6)) drop-shadow(0 0 60px rgba(57,255,20,0.25));
+    animation: logoPulse 3s ease-in-out infinite;
+  }
+  @keyframes logoPulse {
+    0%,100% { filter: drop-shadow(0 0 28px rgba(0,212,255,0.6)) drop-shadow(0 0 60px rgba(57,255,20,0.25)); }
+    50% { filter: drop-shadow(0 0 44px rgba(0,212,255,0.9)) drop-shadow(0 0 90px rgba(57,255,20,0.5)); }
+  }
+  .hero-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem; color: var(--green);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    border: 1px solid rgba(57,255,20,0.3);
+    padding: 5px 16px; border-radius: 2px;
+    background: rgba(57,255,20,0.05);
+  }
+  .hero-badge::before { content: '> '; opacity: 0.6; }
+  .hero-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 900; line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .hero-name .cyber { color: var(--cyan); text-shadow: 0 0 30px rgba(0,212,255,0.5); }
+  .hero-name .sha { color: var(--green); text-shadow: 0 0 30px rgba(57,255,20,0.5); }
+  .hero-tagline {
+    font-size: 0.9rem; color: var(--muted);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    font-family: 'Share Tech Mono', monospace;
+  }
+  .hero-desc {
+    font-size: 1.05rem; color: rgba(232,244,255,0.7);
+    line-height: 1.7; max-width: 620px;
+  }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 0.5rem; flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stat {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .stat-num {
+    font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--cyan);
+  }
+  .stat-num.green { color: var(--green); }
+  .stat-label {
+    font-size: 0.7rem; color: var(--muted); letter-spacing: 0.12em;
+    text-transform: uppercase; font-family: 'Share Tech Mono', monospace;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--cyan), #0095b3);
+    color: #000; padding: 12px 32px; border-radius: 3px;
+    font-family: 'Orbitron', sans-serif; font-size: 0.78rem;
+    font-weight: 700; letter-spacing: 0.1em; text-decoration: none;
+    text-transform: uppercase; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 20px rgba(0,212,255,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(0,212,255,0.5); }
+  .btn-outline {
+    border: 1px solid var(--cyan); color: var(--cyan);
+    padding: 12px 32px; border-radius: 3px;
+    font-family: 'Orbitron', sans-serif; font-size: 0.78rem;
+    font-weight: 700; letter-spacing: 0.1em; text-decoration: none;
+    text-transform: uppercase; transition: background 0.2s;
+  }
+  .btn-outline:hover { background: rgba(0,212,255,0.08); }
+
+  /* SECTIONS */
+  section { padding: 90px 5%; }
+  .section-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem; color: var(--green);
+    letter-spacing: 0.25em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-label::before { content: '// '; opacity: 0.5; }
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 700; line-height: 1.1; margin-bottom: 14px;
+  }
+  .section-title .accent { color: var(--cyan); }
+  .divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--green));
+    margin-bottom: 50px;
+  }
+  .container { max-width: 1160px; margin: 0 auto; }
+
+  /* ABOUT */
+  #about { background: var(--navy); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+  }
+  .about-text p { color: rgba(232,244,255,0.7); line-height: 1.8; margin-bottom: 1rem; font-size: 0.97rem; }
+  .platforms {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem;
+  }
+  .platform-tag {
+    display: flex; align-items: center; gap: 7px;
+    background: rgba(0,212,255,0.07);
+    border: 1px solid var(--border);
+    padding: 7px 14px; border-radius: 3px;
+    font-size: 0.78rem; color: var(--cyan);
+    font-family: 'Share Tech Mono', monospace;
+    text-decoration: none; transition: border-color 0.2s, background 0.2s;
+  }
+  .platform-tag:hover { border-color: var(--cyan); background: rgba(0,212,255,0.14); }
+  .platform-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .skills-col { display: flex; flex-direction: column; gap: 18px; }
+  .skill-row { display: flex; flex-direction: column; gap: 7px; }
+  .skill-meta { display: flex; justify-content: space-between; align-items: center; }
+  .skill-name { font-size: 0.82rem; color: var(--white); font-family: 'Share Tech Mono', monospace; }
+  .skill-pct { font-size: 0.78rem; color: var(--green); font-family: 'Orbitron', sans-serif; }
+  .skill-bar { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+  .skill-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--green));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 1.2s cubic-bezier(.4,0,.2,1);
+  }
+  .skill-fill.animated { transform: scaleX(1); }
+
+  /* WORK */
+  #work { background: var(--dark); }
+  .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+  .work-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px; padding: 28px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .work-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--green));
+    transform: scaleX(0); transition: transform 0.3s;
+  }
+  .work-card:hover { border-color: rgba(0,212,255,0.4); transform: translateY(-4px); }
+  .work-card:hover::before { transform: scaleX(1); }
+  .work-card-icon {
+    font-size: 1.8rem; margin-bottom: 14px;
+    filter: drop-shadow(0 0 8px rgba(0,212,255,0.4));
+  }
+  .work-card-title {
+    font-family: 'Orbitron', sans-serif; font-size: 0.9rem;
+    font-weight: 700; color: var(--white); margin-bottom: 8px; letter-spacing: 0.04em;
+  }
+  .work-card-org {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem; color: var(--cyan); margin-bottom: 14px;
+    letter-spacing: 0.1em;
+  }
+  .bug-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .bug-list li {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 0.82rem; color: rgba(232,244,255,0.7); line-height: 1.5;
+  }
+  .bug-list li::before {
+    content: '›'; color: var(--green); font-size: 1rem; flex-shrink: 0; margin-top: 1px;
+  }
+  .bug-count {
+    position: absolute; top: 20px; right: 20px;
+    font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 900;
+    color: rgba(0,212,255,0.12);
+  }
+
+  /* CTF & RANKS */
+  #achievements { background: var(--navy); }
+  .ach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .ach-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 28px 24px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .ach-card:hover {
+    border-color: rgba(57,255,20,0.4);
+    box-shadow: 0 0 30px rgba(57,255,20,0.08);
+  }
+  .ach-icon { font-size: 2.2rem; }
+  .ach-value {
+    font-family: 'Orbitron', sans-serif; font-size: 1.7rem; font-weight: 900;
+    background: linear-gradient(135deg, var(--cyan), var(--green));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .ach-title { font-size: 0.82rem; color: var(--white); font-weight: 600; letter-spacing: 0.05em; }
+  .ach-sub { font-size: 0.72rem; color: var(--muted); font-family: 'Share Tech Mono', monospace; letter-spacing: 0.08em; }
+
+  /* PRICING */
+  #pricing { background: var(--dark); }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
+  .price-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 36px 28px;
+    display: flex; flex-direction: column; gap: 20px;
+    position: relative; transition: border-color 0.3s, transform 0.3s;
+  }
+  .price-card.featured {
+    border-color: rgba(0,212,255,0.5);
+    box-shadow: 0 0 40px rgba(0,212,255,0.08);
+  }
+  .price-card:hover { border-color: rgba(0,212,255,0.4); transform: translateY(-4px); }
+  .featured-tag {
+    position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--cyan), var(--green));
+    color: #000; font-family: 'Orbitron', sans-serif; font-size: 0.62rem;
+    font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 4px 18px; border-radius: 0 0 6px 6px;
+  }
+  .price-tier {
+    font-family: 'Orbitron', sans-serif; font-size: 0.78rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan);
+  }
+  .price-name {
+    font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--white);
+  }
+  .price-amount {
+    font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900;
+    color: var(--white);
+  }
+  .price-amount span { font-size: 0.9rem; color: var(--muted); font-weight: 400; }
+  .price-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .price-features li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.82rem; color: rgba(232,244,255,0.75); line-height: 1.5;
+  }
+  .price-features li .chk { color: var(--green); flex-shrink: 0; font-size: 0.9rem; }
+  .price-cta {
+    display: block; text-align: center;
+    border: 1px solid var(--cyan); color: var(--cyan);
+    padding: 12px; border-radius: 3px;
+    font-family: 'Orbitron', sans-serif; font-size: 0.72rem;
+    font-weight: 700; letter-spacing: 0.1em; text-decoration: none;
+    text-transform: uppercase; transition: background 0.2s;
+    margin-top: auto;
+  }
+  .price-cta:hover { background: rgba(0,212,255,0.1); }
+  .price-cta.primary {
+    background: linear-gradient(135deg, var(--cyan), #0095b3);
+    color: #000; border: none;
+  }
+  .price-cta.primary:hover { opacity: 0.88; }
+  .price-note {
+    font-size: 0.72rem; color: var(--muted); font-family: 'Share Tech Mono', monospace;
+    text-align: center; margin-top: 30px; letter-spacing: 0.06em;
+  }
+
+  /* CONTACT */
+  #contact { background: var(--navy); }
+  .contact-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 60px; align-items: start; }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 18px 20px;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s;
+  }
+  .contact-item:hover { border-color: rgba(0,212,255,0.4); }
+  .contact-item-icon { font-size: 1.3rem; margin-top: 2px; }
+  .contact-item-label { font-size: 0.68rem; color: var(--muted); font-family: 'Share Tech Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+  .contact-item-val { font-size: 0.9rem; color: var(--white); font-weight: 500; }
+  .contact-social { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+  .social-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(0,212,255,0.06); border: 1px solid var(--border);
+    padding: 8px 16px; border-radius: 3px; text-decoration: none;
+    color: var(--cyan); font-size: 0.78rem;
+    font-family: 'Share Tech Mono', monospace;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .social-btn:hover { border-color: var(--cyan); background: rgba(0,212,255,0.12); }
+
+  /* FORM */
+  .contact-form { display: flex; flex-direction: column; gap: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 7px; }
+  .form-group label {
+    font-size: 0.72rem; color: var(--muted);
+    font-family: 'Share Tech Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--white); padding: 12px 16px; border-radius: 3px;
+    font-family: 'Inter', sans-serif; font-size: 0.88rem;
+    outline: none; transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--cyan); }
+  .form-group select option { background: #0D1526; }
+  .submit-btn {
+    background: linear-gradient(135deg, var(--cyan), var(--green));
+    color: #000; border: none; padding: 14px 36px; border-radius: 3px;
+    font-family: 'Orbitron', sans-serif; font-size: 0.82rem;
+    font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: opacity 0.2s, transform 0.2s;
+    align-self: flex-start;
+  }
+  .submit-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  /* OWASP SECTION */
+  #owasp { background: var(--dark); }
+  .owasp-tabs {
+    display: flex; gap: 0; margin-bottom: 40px;
+    border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+    width: fit-content;
+  }
+  .owasp-tab {
+    padding: 12px 28px; cursor: pointer;
+    font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+    font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); background: transparent;
+    border: none; transition: color 0.2s, background 0.2s;
+    border-right: 1px solid var(--border);
+  }
+  .owasp-tab:last-child { border-right: none; }
+  .owasp-tab.active { background: rgba(0,212,255,0.12); color: var(--cyan); }
+  .owasp-tab:hover:not(.active) { color: var(--white); background: rgba(255,255,255,0.03); }
+  .owasp-panel { display: none; }
+  .owasp-panel.active { display: block; }
+  .owasp-intro {
+    font-size: 0.92rem; color: rgba(232,244,255,0.65);
+    line-height: 1.75; margin-bottom: 36px; max-width: 820px;
+  }
+  .owasp-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
+  }
+  .owasp-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+  .owasp-card:hover { border-color: rgba(0,212,255,0.45); transform: translateY(-3px); }
+  .owasp-card-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 20px 14px;
+  }
+  .owasp-rank {
+    font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 900;
+    min-width: 42px; color: rgba(0,212,255,0.25);
+  }
+  .owasp-card-title-wrap { flex: 1; }
+  .owasp-card-name {
+    font-family: 'Orbitron', sans-serif; font-size: 0.8rem;
+    font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: 0.03em;
+  }
+  .owasp-severity {
+    display: inline-block; padding: 2px 10px; border-radius: 2px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+  }
+  .sev-critical { background: rgba(255,60,60,0.15); color: #FF4444; border: 1px solid rgba(255,60,60,0.3); }
+  .sev-high { background: rgba(255,140,0,0.13); color: #FF8C00; border: 1px solid rgba(255,140,0,0.3); }
+  .sev-medium { background: rgba(255,220,0,0.1); color: #FFD700; border: 1px solid rgba(255,220,0,0.3); }
+  .owasp-card-body { padding: 0 20px 18px; }
+  .owasp-desc {
+    font-size: 0.8rem; color: rgba(232,244,255,0.6);
+    line-height: 1.65; margin-bottom: 12px;
+  }
+  .owasp-steps { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .owasp-steps li {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 0.78rem; color: rgba(232,244,255,0.72); line-height: 1.5;
+  }
+  .owasp-steps li .step-num {
+    font-family: 'Orbitron', sans-serif; font-size: 0.65rem; font-weight: 700;
+    color: var(--green); flex-shrink: 0; min-width: 18px; margin-top: 2px;
+  }
+  .owasp-tools {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;
+    padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .tool-tag {
+    background: rgba(57,255,20,0.06); border: 1px solid rgba(57,255,20,0.2);
+    color: var(--green); padding: 3px 10px; border-radius: 2px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.05em;
+  }
+  .owasp-card-header .owasp-icon { font-size: 1.5rem; }
+
+  /* VULN ENCYCLOPEDIA */
+  #vuln-encyclopedia { background: var(--navy); }
+  .enc-search-bar {
+    display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; align-items: center;
+  }
+  .enc-search {
+    flex: 1; min-width: 240px;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--white); padding: 11px 18px 11px 44px; border-radius: 3px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.85rem;
+    outline: none; transition: border-color 0.2s;
+    position: relative;
+  }
+  .enc-search:focus { border-color: var(--cyan); }
+  .enc-search-wrap { position: relative; flex: 1; min-width: 240px; }
+  .enc-search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 1rem; pointer-events: none;
+  }
+  .enc-filter-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .enc-filter {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--muted); padding: 8px 16px; border-radius: 3px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .enc-filter.active, .enc-filter:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,212,255,0.07); }
+  .enc-filter.active { background: rgba(0,212,255,0.12); }
+  .enc-count {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    color: var(--muted); margin-bottom: 20px;
+  }
+  .enc-count span { color: var(--green); }
+  .enc-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+  .enc-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .enc-card:hover { border-color: rgba(0,212,255,0.45); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+  .enc-card.hidden { display: none; }
+  .enc-card-top {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .enc-emoji { font-size: 1.7rem; flex-shrink: 0; margin-top: 2px; }
+  .enc-card-meta { flex: 1; }
+  .enc-card-name {
+    font-family: 'Orbitron', sans-serif; font-size: 0.82rem;
+    font-weight: 700; color: var(--white); margin-bottom: 6px; letter-spacing: 0.03em;
+  }
+  .enc-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .enc-badge {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.08em; padding: 2px 8px; border-radius: 2px;
+    text-transform: uppercase;
+  }
+  .badge-critical { background: rgba(255,50,50,0.15); color: #FF4444; border: 1px solid rgba(255,50,50,0.3); }
+  .badge-high { background: rgba(255,140,0,0.13); color: #FF8C00; border: 1px solid rgba(255,140,0,0.3); }
+  .badge-medium { background: rgba(255,220,0,0.1); color: #FFD700; border: 1px solid rgba(255,220,0,0.3); }
+  .badge-low { background: rgba(100,200,100,0.1); color: #78FF78; border: 1px solid rgba(100,200,100,0.25); }
+  .badge-cat {
+    background: rgba(0,212,255,0.08); color: var(--cyan);
+    border: 1px solid rgba(0,212,255,0.2);
+  }
+  .enc-card-body { padding: 16px 20px 20px; }
+  .enc-short-desc { font-size: 0.8rem; color: rgba(232,244,255,0.6); line-height: 1.6; margin-bottom: 14px; }
+  .enc-accordion { display: none; }
+  .enc-card.expanded .enc-accordion { display: block; }
+  .enc-card.expanded .enc-card-top { border-color: rgba(0,212,255,0.15); }
+  .enc-section-title {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+    color: var(--green); letter-spacing: 0.15em; text-transform: uppercase;
+    margin: 14px 0 8px;
+  }
+  .enc-steps { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .enc-steps li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.78rem; color: rgba(232,244,255,0.72); line-height: 1.55;
+  }
+  .enc-step-n {
+    font-family: 'Orbitron', sans-serif; font-size: 0.6rem; font-weight: 700;
+    color: var(--cyan); min-width: 22px; background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2); padding: 2px 5px; border-radius: 2px;
+    flex-shrink: 0; margin-top: 1px; text-align: center;
+  }
+  .enc-payloads {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 3px; padding: 12px 14px; margin-top: 4px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    color: var(--green); line-height: 1.8;
+  }
+  .enc-tools-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .enc-expand-btn {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--muted); padding: 6px 14px; border-radius: 3px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s;
+    margin-top: 10px; width: 100%;
+  }
+  .enc-expand-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .enc-no-results {
+    grid-column: 1/-1; text-align: center; padding: 60px 20px;
+    font-family: 'Share Tech Mono', monospace; color: var(--muted); font-size: 0.85rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); border-top: 1px solid var(--border);
+    padding: 36px 5%; display: flex;
+    align-items: center; justify-content: space-between; flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-brand {
+    font-family: 'Orbitron', sans-serif; font-size: 0.88rem; font-weight: 700;
+  }
+  .footer-brand .cyber { color: var(--cyan); }
+  .footer-brand .sha { color: var(--green); }
+  .footer-copy { font-size: 0.75rem; color: var(--muted); font-family: 'Share Tech Mono', monospace; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.75rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cyan); }
+
+  /* TYPING */
+  .typed-cursor { color: var(--green); animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .about-grid, .contact-layout { grid-template-columns: 1fr; gap: 36px; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero-stats { gap: 1.5rem; }
+  }
+
+  /* ALERT/SUCCESS */
+  .form-success {
+    background: rgba(57,255,20,0.08); border: 1px solid rgba(57,255,20,0.3);
+    color: var(--green); padding: 14px 18px; border-radius: 3px;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.82rem;
+    display: none;
+  }
+  .form-success.show { display: block; }
+
+  /* SCAN LINE */
+  .scanline {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,212,255,0.013) 2px, rgba(0,212,255,0.013) 4px
+    );
+    pointer-events: none; z-index: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="scanline"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="cybershailendraLOGO.png" alt="CyberShailendra Logo" onerror="this.style.display='none'"/>
+    <span><span class="cyber">CYBER</span><span class="sha">SHAILENDRA</span></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#owasp">OWASP Guide</a></li>
+    <li><a href="#vuln-encyclopedia">Vuln Bible</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="matrix"></canvas>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    
+    <div class="hero-badge">Ethical Hacker &amp; Cyber Security Researcher</div>
+    <h1 class="hero-name"><span class="cyber">CYBER</span><span class="sha">SHAILENDRA</span></h1>
+    <p class="hero-tagline">Secure &nbsp;|&nbsp; Lead &nbsp;|&nbsp; Innovate</p>
+    <p class="hero-desc">
+      Passionate about breaking boundaries in cybersecurity — from uncovering critical vulnerabilities in live systems to leading CTF teams. I hack to protect.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">35+</span>
+        <span class="stat-label">Bugs Disclosed</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num green">Top 2%</span>
+        <span class="stat-label">TryHackMe Global</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">10+</span>
+        <span class="stat-label">CTF Challenges</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num green">4+</span>
+        <span class="stat-label">Platforms Active</span>
+      </div>
+    </div>
+    <div class="hero-btns">
+      <a href="#work" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">Who I Am</p>
+    <h2 class="section-title">Shailendra Mourya — <span class="accent">Digital Defender</span></h2>
+    <div class="divider"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm <strong>Shailendra Mourya</strong>, an ethical hacker, cybersecurity researcher, and digital forensics enthusiast dedicated to making the web a safer place. With hands-on experience across web pentesting, Android app security, and bug bounty programs, I specialize in finding vulnerabilities that others miss.</p>
+        <p>From SQL injections to IDOR, payment bypasses to API data breaches — I've responsibly disclosed critical vulnerabilities across real-world platforms and educational portals, contributing to a more secure digital ecosystem.</p>
+        <p>When I'm not hunting bugs, I'm competing in Capture The Flag challenges, training on TryHackMe, and sharing knowledge through my YouTube channel <strong>@cybershailendra</strong>.</p>
+        <div class="platforms">
+          <a href="https://tryhackme.com/p/cybershailendra" target="_blank" class="platform-tag"><span class="dot"></span>TryHackMe</a>
+          <a href="https://www.linkedin.com/in/cybershailendra" target="_blank" class="platform-tag"><span class="dot"></span>LinkedIn</a>
+          <a href="https://www.openbugbounty.org/researchers/cybershailendra/" target="_blank" class="platform-tag"><span class="dot"></span>OpenBugBounty</a>
+          <a href="https://hackerone.com/cybershailendra" target="_blank" class="platform-tag"><span class="dot"></span>HackerOne</a>
+          <a href="https://www.instagram.com/cybershailendra" target="_blank" class="platform-tag"><span class="dot"></span>Instagram</a>
+          <a href="https://www.youtube.com/@cybershailendra" target="_blank" class="platform-tag"><span class="dot"></span>YouTube</a>
+          <a href="https://www.github.com/cybershailendra1" target="_blank" class="platform-tag"><span class="dot"></span>GitHub</a>
+        </div>
+      </div>
+      <div class="skills-col">
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Web Application Pentesting</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">SQL Injection / XSS</span><span class="skill-pct">92%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Android App Security</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Digital Forensics</span><span class="skill-pct">60%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">CTF / Challenge Solving</span><span class="skill-pct">50%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:50%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">Bug Bounty Programs</span><span class="skill-pct">40%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:40%"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-meta"><span class="skill-name">IDOR / Logic Flaws</span><span class="skill-pct">60%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:60%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="container">
+    <p class="section-label">Professional Life</p>
+    <h2 class="section-title">Bugs Found. <span class="accent">Systems Secured.</span></h2>
+    <div class="divider"></div>
+    <div class="work-grid">
+
+      <div class="work-card">
+        <div class="bug-count">12+</div>
+        <div class="work-card-icon">🔒</div>
+        <div class="work-card-title">Private Bug Disclosure Program</div>
+        <div class="work-card-org">Private Clients</div>
+        <ul class="bug-list">
+          <li>12+ bugs responsibly disclosed</li>
+          <li>Mix of SQLi and XSS vulnerabilities</li>
+          <li>Critical-severity findings under NDA</li>
+        </ul>
+      </div>
+
+      <div class="work-card">
+        <div class="bug-count">01</div>
+        <div class="work-card-icon">🌐</div>
+        <div class="work-card-title">Web Application Audit</div>
+        <div class="work-card-org">tamishshrivastava.in</div>
+        <ul class="bug-list">
+          <li>Full web security assessment</li>
+          <li>Identified and reported critical vulnerabilities</li>
+          <li>Post-fix verification provided</li>
+        </ul>
+      </div>
+
+      <div class="work-card">
+        <div class="bug-count">20</div>
+        <div class="work-card-icon">🏛️</div>
+        <div class="work-card-title">Gyan Ganga Group Portal</div>
+        <div class="work-card-org">Educational Platform</div>
+        <ul class="bug-list">
+          <li>9 SQL Injection vulnerabilities</li>
+          <li>3 IDOR (Insecure Direct Object Reference)</li>
+          <li>1 Payment Bypass flaw</li>
+          <li>1 Open Redirection vulnerability</li>
+          <li>1 Rate Limit bypass</li>
+          <li>1 Privilege escalation: Student → Admin</li>
+          <li>1 API data breach — full username/password leakage</li>
+        </ul>
+      </div>
+
+      <div class="work-card">
+        <div class="bug-count">02</div>
+        <div class="work-card-icon">🌍</div>
+        <div class="work-card-title">OpenBugBounty Disclosures</div>
+        <div class="work-card-org">openbugbounty.org / cybershailendra</div>
+        <ul class="bug-list">
+          <li>2 XSS vulnerabilities disclosed</li>
+          <li>Coordinated responsible disclosure</li>
+          <li>Public profile: cybershailendra</li>
+        </ul>
+      </div>
+
+      <div class="work-card">
+        <div class="bug-count">03</div>
+        <div class="work-card-icon">🎓</div>
+        <div class="work-card-title">GGITS.org Security Audit</div>
+        <div class="work-card-org">Government Geetanjali Institute of Technical Studies</div>
+        <ul class="bug-list">
+          <li>Backup file leakage exposing sensitive data</li>
+          <li>1 Blind SQL Injection in production</li>
+          <li>1 Sensitive directory disclosure</li>
+        </ul>
+      </div>
+
+      <div class="work-card">
+        <div class="bug-count">📱</div>
+        <div class="work-card-icon">📲</div>
+        <div class="work-card-title">Android App Security Testing</div>
+        <div class="work-card-org">Bhumi AI App &amp; Ahedd App</div>
+        <ul class="bug-list">
+          <li>Bhumi AI App — by Kunal Kumar</li>
+          <li>Ahedd App — by Gyan Ganga Group</li>
+          <li>Mobile security review, API analysis, data storage audit</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <p class="section-label">Milestones</p>
+    <h2 class="section-title">Achievements & <span class="accent">Recognition</span></h2>
+    <div class="divider"></div>
+    <div class="ach-grid">
+      <div class="ach-card">
+        <div class="ach-icon">🏆</div>
+        <div class="ach-value">Top 2%</div>
+        <div class="ach-title">TryHackMe Global Rank</div>
+        <div class="ach-sub">Worldwide Leaderboard</div>
+      </div>
+      <div class="ach-card">
+        <div class="ach-icon">🚩</div>
+        <div class="ach-value">10+ CTF</div>
+        <div class="ach-title">CTF Challenges Solved</div>
+        <div class="ach-sub">Team: CyberShail</div>
+      </div>
+      <div class="ach-card">
+        <div class="ach-icon">🐛</div>
+        <div class="ach-value">35+</div>
+        <div class="ach-title">Bugs Responsibly Disclosed</div>
+        <div class="ach-sub">Across Web &amp; Mobile</div>
+      </div>
+      <div class="ach-card">
+        <div class="ach-icon">🔍</div>
+        <div class="ach-value">4+</div>
+        <div class="ach-title">Bug Bounty Platforms</div>
+        <div class="ach-sub">HackerOne · OpenBugBounty · Private</div>
+      </div>
+      <div class="ach-card">
+        <div class="ach-icon">📱</div>
+        <div class="ach-value">2</div>
+        <div class="ach-title">Android Apps Tested</div>
+        <div class="ach-sub">Full Mobile Security Audit</div>
+      </div>
+      <div class="ach-card">
+        <div class="ach-icon">🎥</div>
+        <div class="ach-value">@cyber</div>
+        <div class="ach-title">YouTube Content Creator</div>
+        <div class="ach-sub">@cybershailendra</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <p class="section-label">Services</p>
+    <h2 class="section-title">Security Services & <span class="accent">Pricing</span></h2>
+    <div class="divider"></div>
+    <div class="pricing-grid">
+
+      <div class="price-card">
+        <div class="price-tier">Tier 01</div>
+        <div class="price-name">Website Security Audit</div>
+        <div class="price-amount">₹4,999 <span>/ audit</span></div>
+        <div class="price-desc">Standard web application security audit covering the OWASP Top 10 and common vulnerability classes.</div>
+        <ul class="price-features">
+          <li><span class="chk">✓</span> OWASP Top 10 Coverage</li>
+          <li><span class="chk">✓</span> XSS, SQLi, IDOR Testing</li>
+          <li><span class="chk">✓</span> Authentication &amp; Session Review</li>
+          <li><span class="chk">✓</span> Detailed PDF Report</li>
+          <li><span class="chk">✓</span> Remediation Recommendations</li>
+          <li><span class="chk">✓</span> 1 Re-test Included</li>
+        </ul>
+        <a href="#contact" class="price-cta">Get Started</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="featured-tag">Most Popular</div>
+        <div class="price-tier">Tier 02</div>
+        <div class="price-name">Bug Hunting Program</div>
+        <div class="price-amount">Custom <span>/ severity</span></div>
+        <div class="price-desc">Performance-based engagement. Pricing is calculated as 0.001% of the company's annual income, scaled by the severity of each finding.</div>
+        <ul class="price-features">
+          <li><span class="chk">✓</span> CVSS Severity-Based Pricing</li>
+          <li><span class="chk">✓</span> Critical / High / Medium / Low</li>
+          <li><span class="chk">✓</span> Full Pentest Methodology</li>
+          <li><span class="chk">✓</span> Proof-of-Concept for Each Bug</li>
+          <li><span class="chk">✓</span> Responsible Disclosure Support</li>
+          <li><span class="chk">✓</span> NDA Available on Request</li>
+        </ul>
+        <a href="#contact" class="price-cta primary">Request Quote</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-tier">Tier 03</div>
+        <div class="price-name">Android App Security</div>
+        <div class="price-amount">₹7,999 <span>/ app</span></div>
+        <div class="price-desc">Comprehensive mobile security testing for Android applications covering OWASP Mobile Top 10.</div>
+        <ul class="price-features">
+          <li><span class="chk">✓</span> Static &amp; Dynamic Analysis</li>
+          <li><span class="chk">✓</span> API Security Testing</li>
+          <li><span class="chk">✓</span> Data Storage &amp; Encryption Audit</li>
+          <li><span class="chk">✓</span> Network Traffic Interception</li>
+          <li><span class="chk">✓</span> Full Report &amp; Fix Guidance</li>
+          <li><span class="chk">✓</span> OWASP Mobile Top 10</li>
+        </ul>
+        <a href="#contact" class="price-cta">Get Started</a>
+      </div>
+
+    </div>
+    <p class="price-note">// All prices are negotiable based on scope. Enterprise &amp; custom engagements available — contact for tailored pricing.</p>
+  </div>
+</section>
+
+<!-- OWASP GUIDE -->
+<section id="owasp">
+  <div class="container">
+    <p class="section-label">Knowledge Base</p>
+    <h2 class="section-title">How to Find <span class="accent">OWASP Vulnerabilities</span></h2>
+    <div class="divider"></div>
+
+    <div class="owasp-tabs">
+      <button class="owasp-tab active" onclick="switchTab('web')">🌐 Web Application (OWASP Top 10)</button>
+      <button class="owasp-tab" onclick="switchTab('mobile')">📱 Android App (OWASP Mobile Top 10)</button>
+    </div>
+
+    <!-- WEB PANEL -->
+    <div class="owasp-panel active" id="panel-web">
+      <p class="owasp-intro">The <strong>OWASP Web Application Top 10</strong> is the definitive standard for web security. Below is a practical, step-by-step guide on how each vulnerability is discovered during a real penetration test or bug bounty hunt.</p>
+      <div class="owasp-grid">
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">A01</span>
+            <div class="owasp-icon">🔓</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Broken Access Control</div>
+              <span class="owasp-severity sev-critical">Critical</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Occurs when users can act outside of their intended permissions — accessing other users' data or admin functions.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Map all endpoints using Burp Suite Spider or manual crawling</li>
+              <li><span class="step-num">02</span> Test IDOR by changing IDs in URLs, body params, headers (e.g. /user/123 → /user/124)</li>
+              <li><span class="step-num">03</span> Try accessing admin routes without privilege (e.g. /admin/dashboard)</li>
+              <li><span class="step-num">04</span> Check forced browsing by guessing file paths or API endpoints</li>
+              <li><span class="step-num">05</span> Test horizontal vs vertical privilege escalation</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">Burp Suite</span>
+              <span class="tool-tag">Postman</span>
+              <span class="tool-tag">ffuf</span>
+              <span class="tool-tag">Autorize</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">A02</span>
+            <div class="owasp-icon">🔑</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Cryptographic Failures</div>
+              <span class="owasp-severity sev-critical">Critical</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Weak or missing encryption exposing sensitive data in transit or at rest — passwords, tokens, PII.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Intercept traffic with Burp Suite — check for HTTP (not HTTPS) usage</li>
+              <li><span class="step-num">02</span> Inspect cookies: look for sensitive data, missing Secure/HttpOnly flags</li>
+              <li><span class="step-num">03</span> Check JS files for hardcoded secrets, API keys, passwords</li>
+              <li><span class="step-num">04</span> Use testssl.sh to identify weak cipher suites or expired certs</li>
+              <li><span class="step-num">05</span> Look for Base64-encoded sensitive data instead of encryption</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">Burp Suite</span>
+              <span class="tool-tag">testssl.sh</span>
+              <span class="tool-tag">truffleHog</span>
+              <span class="tool-tag">gitleaks</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">A03</span>
+            <div class="owasp-icon">💉</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Injection (SQLi / XSS)</div>
+              <span class="owasp-severity sev-critical">Critical</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Untrusted data sent to interpreters — SQL, OS, LDAP. Leads to data exfiltration, auth bypass, RCE.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Identify all input fields: search bars, login forms, URL params, headers</li>
+              <li><span class="step-num">02</span> For SQLi: inject <code>'</code>, <code>' OR 1=1--</code>, boolean/time-based payloads</li>
+              <li><span class="step-num">03</span> Use sqlmap to automate SQLi discovery and exploitation</li>
+              <li><span class="step-num">04</span> For XSS: inject <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> in all reflection points</li>
+              <li><span class="step-num">05</span> Test stored XSS in profile fields, comments, file uploads</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">sqlmap</span>
+              <span class="tool-tag">Burp Suite</span>
+              <span class="tool-tag">XSStrike</span>
+              <span class="tool-tag">Dalfox</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">A04</span>
+            <div class="owasp-icon">🏗️</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Insecure Design</div>
+              <span class="owasp-severity sev-high">High</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Flaws in architecture and design — missing threat modelling, insecure business logic at the design level.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Map the application's business logic and user flows manually</li>
+              <li><span class="step-num">02</span> Test rate limiting: can you spam password resets or OTPs?</li>
+              <li><span class="step-num">03</span> Test payment logic: price manipulation, coupon stacking, negative values</li>
+              <li><span class="step-num">04</span> Look for multi-step process flaws — can you skip steps?</li>
+              <li><span class="step-num">05</span> Check account recovery flows for predictable tokens or insecure questions</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">Burp Suite</span>
+              <span class="tool-tag">Manual Testing</span>
+              <span class="tool-tag">OWASP WSTG</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">A05</span>
+            <div class="owasp-icon">⚙️</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Security Misconfiguration</div>
+              <span class="owasp-severity sev-high">High</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Default credentials, open cloud storage, verbose error messages, unnecessary features enabled.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Run Nikto to detect server misconfigurations and exposed files</li>
+              <li><span class="step-num">02</span> Check HTTP response headers (missing X-Frame-Options, CSP, HSTS)</li>
+              <li><span class="step-num">03</span> Look for exposed admin panels: /phpmyadmin, /admin, /.git, /backup</li>
+              <li><span class="step-num">04</span> Test default credentials on login pages</li>
+              <li><span class="step-num">05</span> Search for sensitive files: .env, web.config, robots.txt, sitemap.xml</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">Nikto</span>
+              <span class="tool-tag">dirsearch</span>
+              <span class="tool-tag">gobuster</span>
+              <span class="tool-tag">nuclei</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">A07</span>
+            <div class="owasp-icon">🚪</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Identification & Auth Failures</div>
+              <span class="owasp-severity sev-critical">Critical</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Broken authentication, weak session tokens, missing MFA — leading to account takeovers.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Test for username enumeration via login error differences</li>
+              <li><span class="step-num">02</span> Brute-force login forms with Hydra or Burp Intruder (rate-limit bypass)</li>
+              <li><span class="step-num">03</span> Inspect session tokens — check entropy, predictability, JWT weaknesses</li>
+              <li><span class="step-num">04</span> Test JWT with alg:none, RS256→HS256 confusion, weak secrets</li>
+              <li><span class="step-num">05</span> Check for session fixation and session not invalidated on logout</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">Hydra</span>
+              <span class="tool-tag">jwt_tool</span>
+              <span class="tool-tag">Burp Suite</span>
+              <span class="tool-tag">hashcat</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">A08</span>
+            <div class="owasp-icon">📦</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Software & Data Integrity Failures</div>
+              <span class="owasp-severity sev-high">High</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Insecure deserialization, unverified software updates, CI/CD pipeline vulnerabilities.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Identify serialized objects in cookies, params (Java, PHP, Python pickles)</li>
+              <li><span class="step-num">02</span> Test deserialization with ysoserial or phpggc payloads</li>
+              <li><span class="step-num">03</span> Check update mechanisms — are they integrity-verified?</li>
+              <li><span class="step-num">04</span> Inspect JS imports for unverified CDN dependencies</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">ysoserial</span>
+              <span class="tool-tag">phpggc</span>
+              <span class="tool-tag">Burp Suite</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">A10</span>
+            <div class="owasp-icon">🌊</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Server-Side Request Forgery</div>
+              <span class="owasp-severity sev-critical">Critical</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">SSRF forces the server to make requests to internal/external systems — leading to cloud metadata theft or RCE.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Find parameters that accept URLs or IPs (fetch URL, webhook, PDF generator)</li>
+              <li><span class="step-num">02</span> Try internal addresses: http://127.0.0.1, http://169.254.169.254 (AWS metadata)</li>
+              <li><span class="step-num">03</span> Use Burp Collaborator to detect blind SSRF via DNS/HTTP callbacks</li>
+              <li><span class="step-num">04</span> Try protocol smuggling: file://, gopher://, dict://</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">Burp Collaborator</span>
+              <span class="tool-tag">SSRFmap</span>
+              <span class="tool-tag">interactsh</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- MOBILE PANEL -->
+    <div class="owasp-panel" id="panel-mobile">
+      <p class="owasp-intro">The <strong>OWASP Mobile Application Security (MAS)</strong> framework defines the Mobile Top 10 — the most critical vulnerabilities in Android/iOS apps. Here's how to find each one using real-world tools and techniques.</p>
+      <div class="owasp-grid">
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">M1</span>
+            <div class="owasp-icon">🔐</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Improper Credential Usage</div>
+              <span class="owasp-severity sev-critical">Critical</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Hardcoded credentials, API keys, or tokens embedded in the APK's source code or config files.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Extract APK: pull from device using adb pull or download from APKPure</li>
+              <li><span class="step-num">02</span> Decompile with jadx-gui or apktool to get readable Java/smali code</li>
+              <li><span class="step-num">03</span> Search for keywords: "password", "secret", "api_key", "token" in source</li>
+              <li><span class="step-num">04</span> Inspect res/values/strings.xml and assets/ for hardcoded values</li>
+              <li><span class="step-num">05</span> Use truffleHog or grep on decoded APK folder</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">jadx-gui</span>
+              <span class="tool-tag">apktool</span>
+              <span class="tool-tag">adb</span>
+              <span class="tool-tag">grep</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">M2</span>
+            <div class="owasp-icon">🛡️</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Inadequate Supply Chain Security</div>
+              <span class="owasp-severity sev-high">High</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Vulnerable third-party libraries, outdated SDKs, or compromised dependencies in the APK.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Decompile APK and inspect build.gradle for third-party dependencies</li>
+              <li><span class="step-num">02</span> Cross-reference libraries with known CVEs using MobSF or OWASP Dependency Check</li>
+              <li><span class="step-num">03</span> Check if APK signing certificate is valid and untampered</li>
+              <li><span class="step-num">04</span> Look for debug builds using apktool: check AndroidManifest.xml for android:debuggable="true"</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">MobSF</span>
+              <span class="tool-tag">apktool</span>
+              <span class="tool-tag">OWASP DepCheck</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">M3</span>
+            <div class="owasp-icon">🔒</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Insecure Authentication & Auth</div>
+              <span class="owasp-severity sev-critical">Critical</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Weak auth mechanisms, missing token validation, insecure biometric implementation.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Intercept API calls with Burp Suite via proxy setup on emulator/device</li>
+              <li><span class="step-num">02</span> Test if JWT/session tokens are validated server-side or just client-side</li>
+              <li><span class="step-num">03</span> Try bypassing login by modifying responses: change "false" → "true" in auth response</li>
+              <li><span class="step-num">04</span> Test OTP brute-force and rate limiting on login endpoints</li>
+              <li><span class="step-num">05</span> Check if biometric auth can be bypassed via Frida hooks</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">Burp Suite</span>
+              <span class="tool-tag">Frida</span>
+              <span class="tool-tag">Objection</span>
+              <span class="tool-tag">jwt_tool</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">M4</span>
+            <div class="owasp-icon">📂</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Insufficient Input/Output Validation</div>
+              <span class="owasp-severity sev-high">High</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Missing validation on inputs leading to SQLi, XSS in WebViews, command injection, or path traversal.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Test all app input fields with SQLi and XSS payloads via Burp Suite</li>
+              <li><span class="step-num">02</span> If app uses WebView, test for JavaScript injection and XSS</li>
+              <li><span class="step-num">03</span> Check deep links and intent data for unvalidated user-controlled input</li>
+              <li><span class="step-num">04</span> Test file upload functions: path traversal in filename, MIME type bypass</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">Burp Suite</span>
+              <span class="tool-tag">Drozer</span>
+              <span class="tool-tag">adb</span>
+              <span class="tool-tag">Manual</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">M5</span>
+            <div class="owasp-icon">💾</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Insecure Communication</div>
+              <span class="owasp-severity sev-critical">Critical</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Plain HTTP usage, missing certificate pinning, accepting invalid/self-signed certs — enabling MitM attacks.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Set up Burp Suite as proxy and install CA cert on Android device/emulator</li>
+              <li><span class="step-num">02</span> Intercept all API traffic — check for plain HTTP endpoints</li>
+              <li><span class="step-num">03</span> If cert pinning is present, bypass using Frida or Objection: objection --gadget "appname" explore → android sslpinning disable</li>
+              <li><span class="step-num">04</span> Test for weak TLS versions using testssl.sh on the server</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">Burp Suite</span>
+              <span class="tool-tag">Frida</span>
+              <span class="tool-tag">Objection</span>
+              <span class="tool-tag">Wireshark</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">M6</span>
+            <div class="owasp-icon">🗄️</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Inadequate Privacy Controls</div>
+              <span class="owasp-severity sev-high">High</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Sensitive data stored unencrypted on device — shared preferences, SQLite DBs, log files, external storage.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Use adb shell to access app's data directory: adb shell → run-as com.app.package → ls</li>
+              <li><span class="step-num">02</span> Check shared_prefs/*.xml for tokens, passwords, PII in plaintext</li>
+              <li><span class="step-num">03</span> Pull SQLite databases: adb pull /data/data/com.app/databases/app.db</li>
+              <li><span class="step-num">04</span> Check external storage: /sdcard/ for sensitive files</li>
+              <li><span class="step-num">05</span> Read logcat output: adb logcat — look for credentials, tokens in logs</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">adb</span>
+              <span class="tool-tag">SQLite Browser</span>
+              <span class="tool-tag">MobSF</span>
+              <span class="tool-tag">logcat</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">M7</span>
+            <div class="owasp-icon">🧩</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Insufficient Binary Protections</div>
+              <span class="owasp-severity sev-medium">Medium</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">No obfuscation, no root detection, no anti-tampering — making reverse engineering trivial.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Decompile APK with jadx-gui — if code is readable with no obfuscation, flag it</li>
+              <li><span class="step-num">02</span> Check if root detection exists and bypass it using Magisk + MagiskHide or Frida</li>
+              <li><span class="step-num">03</span> Use objection to check for emulator/debugger detection and bypass it</li>
+              <li><span class="step-num">04</span> Check if ProGuard/R8 obfuscation is enabled in build config</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">jadx-gui</span>
+              <span class="tool-tag">Frida</span>
+              <span class="tool-tag">Objection</span>
+              <span class="tool-tag">Magisk</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="owasp-card">
+          <div class="owasp-card-header">
+            <span class="owasp-rank">M8</span>
+            <div class="owasp-icon">🔧</div>
+            <div class="owasp-card-title-wrap">
+              <div class="owasp-card-name">Security Misconfiguration</div>
+              <span class="owasp-severity sev-high">High</span>
+            </div>
+          </div>
+          <div class="owasp-card-body">
+            <p class="owasp-desc">Debug mode enabled, backup enabled, exported components, weak permissions — common misconfigurations in AndroidManifest.xml.</p>
+            <ul class="owasp-steps">
+              <li><span class="step-num">01</span> Decode AndroidManifest.xml using apktool: check android:exported, android:debuggable, android:allowBackup</li>
+              <li><span class="step-num">02</span> Use Drozer to enumerate exported activities, services, content providers</li>
+              <li><span class="step-num">03</span> Test exported activities directly: adb shell am start -n com.pkg/.ActivityName</li>
+              <li><span class="step-num">04</span> Check Firebase/cloud config files (google-services.json) for public read access</li>
+            </ul>
+            <div class="owasp-tools">
+              <span class="tool-tag">apktool</span>
+              <span class="tool-tag">Drozer</span>
+              <span class="tool-tag">adb</span>
+              <span class="tool-tag">MobSF</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- METHODOLOGY FLOW -->
+      <div style="margin-top:48px;">
+        <p class="section-label" style="margin-bottom:16px;">Android Testing Methodology</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:20px 16px;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">📥</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;color:var(--cyan);margin-bottom:5px;letter-spacing:0.08em;">STEP 1</div>
+            <div style="font-size:0.8rem;color:var(--white);font-weight:600;">Acquire APK</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:5px;">adb pull, APKPure, or direct install</div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:20px 16px;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🔍</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;color:var(--cyan);margin-bottom:5px;letter-spacing:0.08em;">STEP 2</div>
+            <div style="font-size:0.8rem;color:var(--white);font-weight:600;">Static Analysis</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:5px;">jadx, apktool, MobSF auto-scan</div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:20px 16px;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🌐</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;color:var(--cyan);margin-bottom:5px;letter-spacing:0.08em;">STEP 3</div>
+            <div style="font-size:0.8rem;color:var(--white);font-weight:600;">Network Intercept</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:5px;">Burp proxy + SSL bypass</div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:20px 16px;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">⚡</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;color:var(--cyan);margin-bottom:5px;letter-spacing:0.08em;">STEP 4</div>
+            <div style="font-size:0.8rem;color:var(--white);font-weight:600;">Dynamic Analysis</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:5px;">Frida hooking, runtime manipulation</div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:20px 16px;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">💾</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;color:var(--cyan);margin-bottom:5px;letter-spacing:0.08em;">STEP 5</div>
+            <div style="font-size:0.8rem;color:var(--white);font-weight:600;">Data Storage</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:5px;">adb shell, SQLite, logcat</div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:20px 16px;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">📋</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:700;color:var(--cyan);margin-bottom:5px;letter-spacing:0.08em;">STEP 6</div>
+            <div style="font-size:0.8rem;color:var(--white);font-weight:600;">Report & Disclose</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:5px;">PoC, CVSS score, remediation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Let's <span class="accent">Work Together</span></h2>
+    <div class="divider"></div>
+    <div class="contact-layout">
+      <div class="contact-info">
+        <a href="mailto:cybershailendra1@gmail.com" class="contact-item">
+          <span class="contact-item-icon">📧</span>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-val">cybershailendra1@gmail.com</div>
+          </div>
+        </a>
+        <a href="tel:+918817724241" class="contact-item">
+          <span class="contact-item-icon">📞</span>
+          <div>
+            <div class="contact-item-label">Phone / WhatsApp</div>
+            <div class="contact-item-val">+91 881XXX4241</div>
+          </div>
+        </a>
+        <div class="contact-item">
+          <span class="contact-item-icon">📍</span>
+          <div>
+            <div class="contact-item-label">Location</div>
+            <div class="contact-item-val">Badwara, Katni M.P India 🇮🇳</div>
+          </div>
+        </div>
+        <div class="contact-social">
+          <a href="https://www.linkedin.com/in/cybershailendra" target="_blank" class="social-btn">💼 LinkedIn</a>
+          <a href="https://www.instagram.com/cybershailendra" target="_blank" class="social-btn">📸 Instagram</a>
+          <a href="https://www.youtube.com/@cybershailendra" target="_blank" class="social-btn">▶️ YouTube</a>
+          <a href="https://hackerone.com/cybershailendra" target="_blank" class="social-btn">🎯 HackerOne</a>
+          <a href="https://www.openbugbounty.org/researchers/cybershailendra/" target="_blank" class="social-btn">🐛 OpenBugBounty</a>
+          <a href="https://www.github.com/@cybershailendra1" target="_blank" class="platform-tag"><span class="dot"></span>GitHub</a>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" name="name" placeholder="Your full name" required />
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" name="email" placeholder="your@email.com" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX" />
+          </div>
+          <div class="form-group">
+            <label>Service Required *</label>
+            <select name="service" required>
+              <option value="">Select a service</option>
+              <option>Website Security Audit</option>
+              <option>Bug Hunting Program</option>
+              <option>Android App Security Testing</option>
+              <option>Custom / Enterprise Engagement</option>
+              <option>General Inquiry</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Company / Website URL</label>
+          <input type="text" name="website" placeholder="https://yourcompany.com" />
+        </div>
+        <div class="form-group">
+          <label>Message *</label>
+          <textarea name="message" rows="5" placeholder="Describe your security needs, scope, and any specific vulnerabilities you're concerned about..." required></textarea>
+        </div>
+        <div class="form-success" id="formSuccess" aria-live="polite">
+          ✓ Your email app is opening with the message ready to send.
+        </div>
+        <button type="submit" class="submit-btn">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand"><span class="cyber">CYBER</span><span class="sha">SHAILENDRA</span></div>
+  <p class="footer-copy">© 2026 Shailendra Mourya · Ethical Hacker · Cyber Security Researcher</p>
+  <div class="footer-links">
+    <a href="#hero">Top</a>
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+/* MATRIX RAIN */
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+let drops = [];
+function initMatrix() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const cols = Math.floor(canvas.width / 18);
+  drops = Array(cols).fill(1);
+}
+function drawMatrix() {
+  ctx.fillStyle = 'rgba(5,8,16,0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#00D4FF';
+  ctx.font = '13px Share Tech Mono, monospace';
+  const chars = '01アイウエオカキクケコサシスセソ<>{}[]!@#$%^&*';
+  drops.forEach((y, i) => {
+    const ch = chars[Math.floor(Math.random() * chars.length)];
+    ctx.fillStyle = Math.random() > 0.95 ? '#39FF14' : 'rgba(0,212,255,0.7)';
+    ctx.fillText(ch, i * 18, y * 18);
+    if (y * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+    drops[i]++;
+  });
+}
+initMatrix();
+setInterval(drawMatrix, 55);
+window.addEventListener('resize', initMatrix);
+
+/* SKILL BARS */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-fill').forEach(b => b.classList.add('animated'));
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('#about').forEach(s => observer.observe(s));
+
+/* FORM */
+function handleSubmit(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const name = formData.get('name');
+  const email = formData.get('email');
+  const phone = formData.get('phone') || 'Not provided';
+  const service = formData.get('service');
+  const website = formData.get('website') || 'Not provided';
+  const message = formData.get('message');
+  const subject = `${service} inquiry from ${name}`;
+  const body = [
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Phone: ${phone}`,
+    `Service: ${service}`,
+    `Company / Website: ${website}`,
+    '',
+    'Message:',
+    message
+  ].join('\n');
+  const success = document.getElementById('formSuccess');
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=cybershailendra1@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const gmailWindow = window.open(gmailUrl, '_blank', 'noopener');
+  if (!gmailWindow) window.location.href = gmailUrl;
+  success.classList.add('show');
+  setTimeout(() => success.classList.remove('show'), 5000);
+}
+
+/* OWASP TABS */
+function switchTab(tab) {
+  document.querySelectorAll('.owasp-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.owasp-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  event.target.classList.add('active');
+  // re-trigger fade-in for newly visible cards
+  document.querySelectorAll('#panel-' + tab + ' .owasp-card').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(24px)';
+    setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 50);
+  });
+}
+
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.work-card, .ach-card, .price-card, .owasp-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s';
+  fadeObserver.observe(el);
+});
+
+/* ===================== BLOG ===================== */
+// Permanent posts: edit this array directly to publish new writeups
+// (or use the "Copy Post Code" button in the New Post form to generate an entry).
+const blogPosts = [
+  {
+    title: "Anatomy of a Union-Based SQL Injection",
+    date: "2026-03-10",
+    tags: ["SQLi", "Web Security", "Writeup"],
+    summary: "How a single quote in a POST parameter unraveled a full user table.",
+    body: "Union-based SQL injection remains one of the most reliable ways to extract data from a vulnerable backend once you can control column count and types.\n\nThe general approach: confirm injectability with a single quote, determine the number of columns with ORDER BY or UNION SELECT NULL,NULL..., then map which columns reflect in the response, and finally substitute those columns with the data you want to extract.\n\nResponsible disclosure matters here — once confirmed, the priority is reporting to the affected organization with a clear PoC and remediation guidance (parameterized queries, least-privilege DB accounts), not further exploitation."
+  },
+  {
+    title: "Why Most of My Bug Bounty Reports Don't Pay — And What I'm Changing",
+    date: "2026-02-18",
+    tags: ["Bug Bounty", "Career"],
+    summary: "35+ disclosures, mostly VDPs. Here's the shift toward paid programs.",
+    body: "A lot of early bug hunting happens on Vulnerability Disclosure Programs (VDPs) — you get credit, not cash. That's valuable for building a portfolio, but it doesn't pay bills.\n\nThe shift: focus on programs that explicitly list monetary rewards, build a HackerOne/Bugcrowd reputation strong enough for private program invites, and treat every disclosure as a credibility asset that opens freelance and job doors — not just a line in a hall of fame."
+  },
+  {
+    title: "AI Security 101: What OWASP LLM Top 10 Actually Means",
+    date: "2026-01-22",
+    tags: ["AI Security", "LLM", "OWASP"],
+    summary: "Breaking down prompt injection, sensitive info disclosure, and why AI security is the next frontier.",
+    body: "As LLMs get embedded into more products, a new attack surface opens up. Prompt injection (LLM01) lets an attacker manipulate model behavior through crafted input. Sensitive information disclosure (LLM06) happens when a model leaks data it shouldn't — backend context, other users' data, or internal system details.\n\nTools like Garak and PyRIT are becoming the Burp Suite of AI security — systematic ways to probe models for these weaknesses before attackers do."
+  },
+  {
+    title: "Case Study #1: IDOR on Fee Records — Gyan Ganga Group ERP",
+    date: "2026-06-24",
+    tags: ["IDOR", "Case Study", "Fixed"],
+    summary: "How an incrementable internal record ID let any student touch another student's fee data — since patched.",
+    body: "During an authorized assessment of the Gyan Ganga Group academic ERP, the fee-payment flow accepted an internal database record identifier directly from the client, with no server-side check that the record actually belonged to the logged-in session.\n\nImpact: an attacker could view another student's outstanding dues and payment history, and in the worst case tamper with fee status — a direct financial-privacy and integrity issue.\n\nFix: the endpoint now derives the owning student strictly from the authenticated server-side session, never from client-supplied IDs. This has been verified as remediated (CVSS 8.1 → resolved).\n\nLesson: never trust an object ID from the request body for ownership-sensitive operations — always bind the query to the session."
+  },
+  {
+    title: "Case Study #2: CMS SQL Injection (UNION-based) — Gyan Ganga Group",
+    date: "2026-06-24",
+    tags: ["SQLi", "Case Study", "Fixed"],
+    summary: "A UNION-based injection in the CMS layer with full database read access — now fixed and WAF-protected.",
+    body: "A parameter in the CMS module was concatenated directly into a SQL query without sanitization, allowing UNION-based extraction of arbitrary table data — a full database compromise scenario.\n\nImpact: CVSS 10.0. Complete confidentiality and integrity loss for any data reachable by that database user.\n\nFix: the endpoint now rejects malformed input and sits behind a WAF that blocks injection attempts; post-remediation testing confirmed the vector is closed.\n\nLesson: parameterized queries remain non-negotiable — a WAF is a good compensating control, but the underlying query needs to be safe on its own."
+  },
+  {
+    title: "Case Study #3: Staff Portal SQL Injection — Gyan Ganga Group",
+    date: "2026-06-24",
+    tags: ["SQLi", "Case Study", "Fixed"],
+    summary: "Staff-facing login/query logic vulnerable to injection, exposing HR and payroll-adjacent data — now remediated.",
+    body: "The staff portal's server-side query logic was injectable, meaning an attacker could potentially bypass authentication logic or extract data staff accounts are meant to protect.\n\nImpact: CVSS 10.0 — staff-tier data exposure with downstream risk to payroll and HR systems that trust the staff session.\n\nFix: input handling was corrected and access is now filtered at the WAF layer; verified as fixed in the post-remediation assessment.\n\nLesson: authentication and authorization logic should never share a code path with unsanitized query construction."
+  },
+  {
+    title: "Case Study #4: Student Portal SQL Injection (RCE-adjacent) — Gyan Ganga Group",
+    date: "2026-06-24",
+    tags: ["SQLi", "Case Study", "Fixed"],
+    summary: "A student-facing fee endpoint vulnerable to UNION and time-based injection, with a path toward server compromise — now closed.",
+    body: "This finding combined a student-facing fee-processing endpoint with a database technology stack that, when chained with the server's exposed services, extended beyond data theft toward potential remote code execution.\n\nImpact: CVSS 10.0 — the most severe finding in the assessment, given the RCE-adjacent chaining risk.\n\nFix: both UNION SELECT and time-based blind injection attempts are now rejected; verified fixed post-remediation.\n\nLesson: a single injection point rarely stays 'just data theft' once you consider what else shares the same server."
+  },
+  {
+    title: "Case Study #5 & #11: Broken Access Control — Staff Dashboard API",
+    date: "2026-06-24",
+    tags: ["Broken Access Control", "Case Study", "Fixed"],
+    summary: "A staff dashboard API responding without an authentication check — now returns 403 by default.",
+    body: "The staff dashboard's backing API endpoint didn't verify that the caller was an authenticated staff session before returning data — meaning direct requests to the endpoint, session or not, produced a response.\n\nImpact: CVSS ~10.0 — unauthenticated exposure of staff-tier operational data.\n\nFix: the endpoint now consistently returns 403 Forbidden without a valid session, enforced via WAF plus tightened server-side checks.\n\nLesson: 'the frontend doesn't show a link to it' is not access control — every API needs its own authorization check."
+  },
+  {
+    title: "Case Study #6: Student Profile SQL Injection — Gyan Ganga Group",
+    date: "2026-06-24",
+    tags: ["SQLi", "Case Study", "Fixed"],
+    summary: "Profile-lookup logic vulnerable to UNION-based injection, exposing student PII — since remediated.",
+    body: "The student profile endpoint built its lookup query with unsanitized input, allowing UNION-based injection to pull data outside the intended profile record — including other students' personal information.\n\nImpact: CVSS 10.0 — large-scale PII exposure risk (names, academic records, and potentially identity document data).\n\nFix: query parameterization was corrected; post-remediation testing confirmed injection attempts are blocked.\n\nLesson: profile/lookup endpoints are a common blind spot because they 'feel read-only' — they need the same rigor as login forms."
+  },
+  {
+    title: "Case Study #7 & #13: Unauthenticated HR & Payroll Data Exposure",
+    date: "2026-06-24",
+    tags: ["SQLi", "PII", "Case Study", "Fixed"],
+    summary: "HR and payroll dashboard logic reachable without authentication, exposing sensitive employee data — now fixed.",
+    body: "The HR and payroll module's dashboard endpoint combined an injectable query with a missing authentication gate, meaning sensitive salary and personal data for staff could be fetched without logging in.\n\nImpact: CVSS 9.1–10.0 — a serious PII and financial-privacy breach for every staff member in the system.\n\nFix: authentication is now enforced before any data is returned, and the underlying query has been parameterized; confirmed closed in re-testing.\n\nLesson: HR/payroll systems deserve the strictest access control on the entire platform — the blast radius is every employee's personal data."
+  },
+  {
+    title: "Case Study #8: Staff Profile Error-Based SQL Injection",
+    date: "2026-06-24",
+    tags: ["SQLi", "Case Study", "Fixed"],
+    summary: "Verbose database error messages turned into a full error-based injection channel — now suppressed and patched.",
+    body: "The staff profile endpoint leaked detailed database error output when fed malformed input, which is enough on its own to enumerate a database schema and extract data via error-based injection techniques.\n\nImpact: CVSS 10.0 — the error verbosity alone accelerated exploitation significantly.\n\nFix: input is now sanitized before it reaches the query layer, and error output has been generalized so it no longer leaks schema details.\n\nLesson: turn off verbose database errors in production, full stop — they're a gift to anyone probing your app."
+  },
+  {
+    title: "Case Study #9: Broken Access Control — Admin Dashboard API",
+    date: "2026-06-24",
+    tags: ["Broken Access Control", "Case Study", "Fixed"],
+    summary: "The admin dashboard's backing API had no server-side privilege check — now access-gated and WAF-protected.",
+    body: "Similar in root cause to the staff-side finding, but on the admin dashboard: the API returned administrative data to any caller, authenticated or not, because the privilege check simply wasn't implemented server-side.\n\nImpact: CVSS 9.8 — administrative-tier data exposure, one of the more severe access-control gaps in the assessment.\n\nFix: the endpoint now requires a validated admin session and returns 403 otherwise; verified fixed.\n\nLesson: admin panels need the strongest access control on the app, not the weakest — 'security by obscurity of the URL' is not a control."
+  },
+  {
+    title: "Case Study #10: Privilege Escalation (Student → Admin)",
+    date: "2026-06-24",
+    tags: ["Privilege Escalation", "Case Study", "Fixed"],
+    summary: "Chaining the access-control gaps above allowed a student session to reach admin-level functionality — now closed.",
+    body: "This finding wasn't a single bug — it was the consequence of chaining the broken access control and injection issues above, where a low-privilege student session could ultimately reach administrator-level actions.\n\nImpact: CVSS 9.8 — full horizontal-to-vertical privilege escalation, the kind of finding that turns a single low-severity gap into a critical incident.\n\nFix: since the underlying access-control and injection flaws it depended on are now remediated, this escalation path is closed.\n\nLesson: privilege escalation findings are a great reminder to threat-model your app as a graph of chained weaknesses, not a checklist of isolated endpoints."
+  },
+  {
+    title: "Case Study #12: IDOR on Staff Documents",
+    date: "2026-06-24",
+    tags: ["IDOR", "Case Study", "Fixed"],
+    summary: "Staff document retrieval trusted a client-supplied identifier — now enforces ownership checks.",
+    body: "A document-retrieval endpoint for staff files accepted a document identifier from the client and served the file without verifying it belonged to the requesting staff member.\n\nImpact: CVSS 8.8 — unauthorized access to other staff members' documents, a confidentiality breach with HR implications.\n\nFix: the endpoint now validates document ownership server-side before returning any file; confirmed fixed post-remediation.\n\nLesson: file/document IDOR is one of the most common — and most overlooked — access control gaps in ERP-style systems."
+  },
+  {
+    title: "Case Study #14: Broken Access Control — Student Administration Module",
+    date: "2026-06-24",
+    tags: ["Broken Access Control", "Case Study", "Fixed"],
+    summary: "The student administration dashboard was reachable without authentication — now properly gated.",
+    body: "Like the staff and admin dashboard findings, the student administration module's API didn't enforce a session check, allowing unauthenticated access to administrative student records.\n\nImpact: CVSS 9.1 — sensitive student administrative data exposed to anyone who found the endpoint.\n\nFix: authentication is now enforced and unauthorized requests return 403; verified in the post-remediation assessment.\n\nLesson: when you find one unauthenticated dashboard API in a system, always check the sibling modules — the pattern repeats."
+  },
+  {
+    title: "Case Study #15: Admin User API — Plaintext Password Exposure",
+    date: "2026-06-24",
+    tags: ["Sensitive Data Exposure", "Case Study", "Fixed"],
+    summary: "The single most severe finding: an admin-facing API returning plaintext credentials for every account, including SUPERADMIN — now fixed.",
+    body: "The most critical finding of the engagement: an administrative user-management endpoint returned account credentials in plaintext for all users, up to and including SUPERADMIN accounts, rather than hashed or masked values.\n\nImpact: CVSS 10.0 — a single request effectively handed over full administrative control of the platform. This was the finding that made every other issue in the report exploitable at will.\n\nFix: the endpoint no longer returns credential material at all, and access is now gated behind authentication and the WAF. Because these credentials were exposed prior to the fix, the organization was also strongly advised to force a full password reset and move to MFA for all admin/staff accounts — recommendations covered in the updated remediation roadmap.\n\nLesson: passwords should never be retrievable in plaintext by any API, under any role — they should only ever be verifiable, never readable."
+  },
+  {
+    title: "Case Study #16: Payment Amount Manipulation (Fee Bypass)",
+    date: "2026-06-24",
+    tags: ["Business Logic", "Case Study", "Fixed"],
+    summary: "Client-controlled fee amounts meant a student could pay whatever they wanted — now validated server-side.",
+    body: "The fee-payment flow trusted a payment amount value coming from the client rather than recalculating it server-side from the actual outstanding balance — a classic business-logic flaw rather than a technical injection.\n\nImpact: CVSS 9.1 — direct financial loss potential, since a student could submit a manipulated amount and have it accepted as valid payment.\n\nFix: the server now independently computes the amount due and ignores/validates any client-submitted figure against it; confirmed fixed.\n\nLesson: never let the client tell the server what something costs — recompute the authoritative value server-side, every time."
+  },
+  {
+    title: "Full Chain: How 16 Findings Became One Full System Compromise",
+    date: "2026-06-24",
+    tags: ["Case Study", "Chained Exploit", "Fixed", "Responsible Disclosure"],
+    summary: "Wrapping up the Gyan Ganga Group assessment — how individually 'critical' bugs chained into total compromise, and why responsible disclosure mattered here.",
+    body: "Looking at this engagement as a whole is more instructive than any single finding: multiple SQL injection points, a set of dashboards missing authentication entirely, an IDOR on financial records, and — the capstone — an admin API leaking plaintext credentials. Individually severe; chained together, a complete compromise of the application and, by extension, meaningful risk to the underlying server.\n\nThe remediation that followed was primarily WAF-driven — vulnerable endpoints now consistently return 403 to hostile input — combined with targeted server-side fixes. Post-remediation testing confirmed 16 of the findings resolved, with one (the original fee-record IDOR) marked unverifiable pending further confirmation.\n\nThis is also why the full technical detail — exact endpoints, payloads, request bodies — isn't reproduced in these write-ups even now that fixes are in place. A WAF is a strong compensating control, not a guarantee, and responsible disclosure means the goal was always a safer system for its students and staff, not a public exploit archive."
+  }
+];
+
+const LOCAL_KEY = "cybershailendra_draft_posts";
+function getDraftPosts() {
+  try { return JSON.parse(localStorage.getItem(LOCAL_KEY)) || []; }
+  catch { return []; }
+}
+function getAllPosts() {
+  return [...getDraftPosts(), ...blogPosts].sort((a,b) => new Date(b.date) - new Date(a.date));
+}
+
+function renderBlogGrid() {
+  const grid = document.getElementById('blogGrid');
+  grid.innerHTML = '';
+  getAllPosts().forEach((post, i) => {
+    const card = document.createElement('div');
+    card.className = 'work-card';
+    card.style.cssText = 'background:var(--card); border:1px solid var(--border); border-radius:6px; padding:24px; cursor:pointer; transition:border-color 0.3s;';
+    card.innerHTML = `
+      <div class="section-label" style="margin-bottom:8px;">${new Date(post.date).toLocaleDateString('en-IN', { year:'numeric', month:'short', day:'numeric' })}</div>
+      <h3 style="font-family:'Orbitron',sans-serif; font-size:1.05rem; margin-bottom:10px; color:var(--white);">${post.title}</h3>
+      <p style="color:var(--muted); font-size:0.85rem; line-height:1.6; margin-bottom:14px;">${post.summary || ''}</p>
+      <div>${(post.tags||[]).map(t => `<span style="display:inline-block; font-size:0.68rem; color:var(--cyan); border:1px solid var(--border); padding:3px 10px; border-radius:20px; margin:0 6px 6px 0; font-family:'Share Tech Mono',monospace;">${t}</span>`).join('')}</div>
+    `;
+    card.addEventListener('mouseenter', () => card.style.borderColor = 'var(--cyan)');
+    card.addEventListener('mouseleave', () => card.style.borderColor = 'var(--border)');
+    card.addEventListener('click', () => openPost(post));
+    grid.appendChild(card);
+  });
+}
+
+function openPost(post) {
+  document.getElementById('modalDate').textContent = new Date(post.date).toLocaleDateString('en-IN', { year:'numeric', month:'long', day:'numeric' });
+  document.getElementById('modalTitle').textContent = post.title;
+  document.getElementById('modalTags').innerHTML = (post.tags||[]).map(t => `<span style="display:inline-block; font-size:0.7rem; color:var(--green); border:1px solid rgba(57,255,20,0.3); padding:3px 10px; border-radius:20px; margin:0 6px 6px 0; font-family:'Share Tech Mono',monospace;">${t}</span>`).join('');
+  document.getElementById('modalBody').textContent = post.body;
+  document.getElementById('blogModal').style.display = 'block';
+}
+document.getElementById('closeModal').addEventListener('click', () => {
+  document.getElementById('blogModal').style.display = 'none';
+});
+
+/* Admin: local-only new post editor */
+document.getElementById('newPostBtn').addEventListener('click', () => {
+  document.getElementById('editorModal').style.display = 'block';
+});
+document.getElementById('closeEditor').addEventListener('click', () => {
+  document.getElementById('editorModal').style.display = 'none';
+});
+
+function buildPostFromForm() {
+  const title = document.getElementById('postTitle').value.trim();
+  const tags = document.getElementById('postTags').value.split(',').map(t => t.trim()).filter(Boolean);
+  const summary = document.getElementById('postSummary').value.trim();
+  const body = document.getElementById('postBody').value.trim();
+  if (!title || !body) return null;
+  return { title, date: new Date().toISOString().slice(0,10), tags, summary, body };
+}
+
+document.getElementById('savePostBtn').addEventListener('click', () => {
+  const post = buildPostFromForm();
+  const msg = document.getElementById('editorMsg');
+  if (!post) { msg.style.color = 'var(--cyan)'; msg.textContent = 'Title aur content dono zaroori hain.'; return; }
+  const drafts = getDraftPosts();
+  drafts.push(post);
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(drafts));
+  renderBlogGrid();
+  msg.style.color = 'var(--green)';
+  msg.textContent = '✓ Draft saved in this browser. Ye sirf tumhe dikhega, doosron ko nahi — permanent karne ke liye "Copy Post Code" use karo.';
+});
+
+document.getElementById('copyPostBtn').addEventListener('click', () => {
+  const post = buildPostFromForm();
+  const msg = document.getElementById('editorMsg');
+  if (!post) { msg.style.color = 'var(--cyan)'; msg.textContent = 'Title aur content dono zaroori hain.'; return; }
+  const code = `  {\n    title: ${JSON.stringify(post.title)},\n    date: ${JSON.stringify(post.date)},\n    tags: ${JSON.stringify(post.tags)},\n    summary: ${JSON.stringify(post.summary)},\n    body: ${JSON.stringify(post.body)}\n  },`;
+  navigator.clipboard.writeText(code).then(() => {
+    msg.style.color = 'var(--green)';
+    msg.textContent = '✓ Copied! Is code ko index.html me blogPosts array ke andar paste karo, phir file re-upload/deploy karo.';
+  });
+});
+
+renderBlogGrid();
+</script>
+</body>
+</html>
